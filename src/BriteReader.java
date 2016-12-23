@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class BriteReader {
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
 
         BriteReader briteReader = new BriteReader();
         try {
@@ -22,7 +22,7 @@ public class BriteReader {
             System.out.println("File Not Found");
         }
     }
-
+*/
     public List<Link> loadTopo(String topoFilePath) throws IOException {
 
         List<String> topoFile = readTopoFile(topoFilePath);
@@ -50,7 +50,7 @@ public class BriteReader {
         while (index < linkNumber) {
             String linkLine = topoFileContents.get(startLine + index);
             String[] parsedLinkLine = linkLine.split("\t");
-            Link link = new Link(Integer.parseInt(parsedLinkLine[0]), Integer.parseInt(parsedLinkLine[1]),
+            Link link = new Link(Integer.parseInt(parsedLinkLine[1]), Integer.parseInt(parsedLinkLine[2]),
                     Double.parseDouble(parsedLinkLine[3]));
             linkList.add(link);
             index++;
