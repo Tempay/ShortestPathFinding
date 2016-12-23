@@ -17,10 +17,10 @@ public class PathFinder {
     }
 
     private Solution findShortestPath(List<Node> nodes,int source,int target) {
-        Solution solution=new Solution(new ArrayList<>(),Integer.MAX_VALUE);
+        Solution solution=new Solution(new ArrayList<>(),(double)Integer.MAX_VALUE);
         int length=0;
         Map<Integer,Solution> map = new HashMap<>();
-        map.put(target,new Solution(new ArrayList<>(),0));
+        map.put(target,new Solution(new ArrayList<>(),0d));
         Set<Integer> path=new HashSet<>();
         path.add(source);
         return helper(nodes,source,target,map,path);
@@ -32,9 +32,8 @@ public class PathFinder {
         if(map.containsKey(source)) {
             return map.get(source);
         }
-        Solution solution=new Solution(new ArrayList<>(),Integer.MAX_VALUE);
+        Solution solution=new Solution(new ArrayList<>(),(double)Integer.MAX_VALUE);
         for(Connection connection : nodes.get(source).connections) {
-
             int newSource=connection.id;
             if(path.contains(newSource)){
                 continue;
@@ -42,10 +41,11 @@ public class PathFinder {
             Set<Integer> newPath=new HashSet<>(path);
             newPath.add(newSource);
             Solution newSolution = helper(nodes,newSource,target,map, newPath);
-            newSolution.length+=connection.length;
-            if(newSolution.length<solution.length) {
-                solution.length=newSolution.length;
-                solution.path=newSolution.path;
+            if(newSolution.length+connection.length<solution.length) {
+                solution.length= newSolution.length+connection.length;
+                solution.path = new ArrayList<>();
+                solution.path.add(source);
+                solution.path.addAll(newSolution.path);
             }
         }
         map.put(source,solution);

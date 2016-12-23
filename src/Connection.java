@@ -3,8 +3,8 @@
  */
 public class Connection {
     int id;
-    double length;
-    public Connection(int id, double length) {
+    Double length;
+    public Connection(int id, Double length) {
         this.id=id;
         this.length=length;
     }

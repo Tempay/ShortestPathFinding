@@ -6,13 +6,13 @@ import java.util.List;
  */
 public class Solution {
     List<Integer> path=new ArrayList<>();
-    int length;
+    Double length;
 
-    public Solution(List<Integer> path, int length) {
+    public Solution(List<Integer> path, Double length) {
         this.path=path;
         this.length=length;
     }
-    public Solution(int length) {
+    public Solution(Double length) {
         this(new ArrayList<Integer>(),length);
     }
 }

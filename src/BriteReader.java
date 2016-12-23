@@ -50,7 +50,7 @@ public class BriteReader {
         while (index < linkNumber) {
             String linkLine = topoFileContents.get(startLine + index);
             String[] parsedLinkLine = linkLine.split("\t");
-            Link link = new Link(Integer.parseInt(parsedLinkLine[0]), Integer.parseInt(parsedLinkLine[1]),
+            Link link = new Link(Integer.parseInt(parsedLinkLine[1]), Integer.parseInt(parsedLinkLine[2]),
                     Double.parseDouble(parsedLinkLine[3]));
             linkList.add(link);
             index++;
