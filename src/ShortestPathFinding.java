@@ -75,10 +75,7 @@ public class ShortestPathFinding {
         links.add(new Link(2,3,0d,true));
         links.add(new Link(1,3,0d,false));
         Graph g = new Graph(5,4,links);
-        List<Node> nodes=new PathFinder().connectLinksToNodes(g);
-        Solution solution1=new PathFinder().findShortestPath(nodes,0,2);
         Map<Set<Integer>,Integer> solution2=new CongestedPathFinder().findCongestedShortedPath(g,0,2);
-        System.out.println(solution1.length);
         System.out.println("the best solution contains "+String.valueOf(solution2.size())+" path");
         for(Map.Entry<Set<Integer>,Integer> entry : solution2.entrySet()) {
             System.out.print("path:");
@@ -96,10 +93,7 @@ public class ShortestPathFinding {
         links.add(new Link(2,1,1000d,false));
         links.add(new Link(2,3,0d,true));
         Graph g = new Graph(4,4,links);
-        List<Node> nodes=new PathFinder().connectLinksToNodes(g);
-        Solution solution1=new PathFinder().findShortestPath(nodes,0,2);
         Map<Set<Integer>,Integer> solution2=new CongestedPathFinder().findCongestedShortedPath(g,0,2);
-        System.out.println(solution1.length);
         System.out.println("the best solution contains "+String.valueOf(solution2.size())+" path");
         for(Map.Entry<Set<Integer>,Integer> entry : solution2.entrySet()) {
             System.out.print("path:");
