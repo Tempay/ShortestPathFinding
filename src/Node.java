@@ -12,7 +12,15 @@ public class Node {
         this.connections=new ArrayList<>();
     }
 
-    public void addConnection(int node1, double length) {
-        this.connections.add(new Connection(node1,length));
+    public void addConnection(int node1, double length,int id) {
+        this.connections.add(new Connection(node1,length,id));
+    }
+
+    public void changeConnection(Double length, int linkId) {
+        for(Connection connection: connections) {
+            if(connection.id==linkId) {
+                connection.length=length;
+            }
+        }
     }
 }

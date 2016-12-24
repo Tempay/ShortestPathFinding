@@ -2,10 +2,12 @@
  * Created by 远志 on 12/22/2016.
  */
 public class Connection {
-    int id;
+    int target;
     Double length;
-    public Connection(int id, Double length) {
-        this.id=id;
+    int id;
+    public Connection(int target, Double length,int id) {
+        this.target=target;
         this.length=length;
+        this.id=id;
     }
 }

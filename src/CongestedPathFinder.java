@@ -1,25 +1,49 @@
 import java.util.*;
 
 /**
- * Created by 远志 on 12/22/2016.
+ * Created by 远志 on 12/23/2016.
  */
-public class PathFinder {
-    public Solution findShortestPath(Graph graph,int source, int target) {
+public class CongestedPathFinder {
 
-        if(false){
-            //wrong input;
-        }
+    double delayConstant=10;
+    int precise=100;
+
+    public Map<Set<Integer>,Integer> findCongestedShortedPath(Graph graph, int source, int target) {
         List<Node> nodes=connectLinksToNodes(graph);
-        return findShortestPath(nodes,source,target);
+        List<Solution> solutions= new ArrayList<>();
+        for (int i = 0; i <precise ; i++) {
+            Solution thisSolution=findShortestPath(nodes,source,target);
+            for (int j = 0; j <thisSolution.path.size() ; j++) {
+                int linkId=thisSolution.path.get(j);
+                if(!graph.links.get(linkId).isCongested){
+                    continue;
+                }
+                graph.links.get(linkId).length+=delayConstant;
+                nodes.get(graph.links.get(linkId).node1).changeConnection(graph.links.get(linkId).length,linkId);
+                nodes.get(graph.links.get(linkId).node2).changeConnection(graph.links.get(linkId).length,linkId);
+            }
+            solutions.add(thisSolution);
+        }
+        Map<Set<Integer>,Integer> result=new HashMap<>();
+        for(Solution solution:solutions) {
+            Set<Integer> thisPath=new HashSet<>(solution.path);
+            if(result.containsKey(thisPath)){
+                result.put(thisPath,result.get(thisPath)+1);
+            } else {
+                result.put(thisPath,1);
+            }
+        }
+        return result;
     }
 
     public Solution findShortestPath(List<Node> nodes,int source,int target) {
+
         Solution solution=new Solution(new ArrayList<>(),(double)Integer.MAX_VALUE);
         int length=0;
         Map<Integer,Solution> map = new HashMap<>();
         map.put(target,new Solution(new ArrayList<>(),0d));
         Set<Integer> path=new HashSet<>();
-        path.add(source);
+        //path.add(source);
         return helper(nodes,source,target,map,path);
 
 
@@ -32,24 +56,23 @@ public class PathFinder {
         Solution solution=new Solution(new ArrayList<>(),(double)Integer.MAX_VALUE);
         for(Connection connection : nodes.get(source).connections) {
             int newSource=connection.target;
-            if(path.contains(newSource)){
+            int thisPath=connection.id;
+            if(path.contains(thisPath)){
                 continue;
             }
             Set<Integer> newPath=new HashSet<>(path);
-            newPath.add(newSource);
+            newPath.add(thisPath);
             Solution newSolution = helper(nodes,newSource,target,map, newPath);
             if(newSolution.length+connection.length<solution.length) {
                 solution.length= newSolution.length+connection.length;
                 solution.path = new ArrayList<>();
-                solution.path.add(source);
+                solution.path.add(thisPath);
                 solution.path.addAll(newSolution.path);
             }
         }
         map.put(source,solution);
         return solution;
     }
-
-
 
     public List<Node> connectLinksToNodes(Graph graph) {
         List<Node> nodes =new ArrayList<>();
@@ -65,4 +88,5 @@ public class PathFinder {
 
         return nodes;
     }
+
 }

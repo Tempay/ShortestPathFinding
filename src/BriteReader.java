@@ -12,22 +12,14 @@ import java.util.regex.Pattern;
  */
 public class BriteReader {
 
-/*    public static void main(String[] args) {
+    int numberOfNodes;
+    int numberOfLinks;
 
-        BriteReader briteReader = new BriteReader();
-        try {
-            List<Link> links = briteReader.loadTopo("../123.brite");
-            System.out.println(links.size());
-        } catch (IOException ioe) {
-            System.out.println("File Not Found");
-        }
-    }
-*/
     public List<Link> loadTopo(String topoFilePath) throws IOException {
 
         List<String> topoFile = readTopoFile(topoFilePath);
-        int numberOfNodes = parseNumber(topoFile.get(3));
-        int numberOfLinks = parseNumber(topoFile.get(numberOfNodes + 6));
+        numberOfNodes = parseNumber(topoFile.get(3));
+        numberOfLinks = parseNumber(topoFile.get(numberOfNodes + 6));
         return parseLink(topoFile, numberOfNodes + 7, numberOfLinks);
     }
 
